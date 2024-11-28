@@ -21,8 +21,25 @@ db.connect((err) => {
     return;
   }
   console.log("Connected to the database");
-});
 
+  const createTableQuery = `
+    CREATE TABLE IF NOT EXISTS schools (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      address VARCHAR(255) NOT NULL,
+      latitude FLOAT NOT NULL,
+      longitude FLOAT NOT NULL
+    )
+  `;
+
+  db.query(createTableQuery, (err) => {
+    if (err) {
+      console.error("Failed to create table:", err.message);
+    } else {
+      console.log("Table ensured: schools");
+    }
+  });
+});
 
 app.post("/addSchool", (req, res) => {
   const { name, address, latitude, longitude } = req.body;
@@ -37,12 +54,10 @@ app.post("/addSchool", (req, res) => {
     if (err) {
       return res.status(500).json({ error: "Database error", details: err });
     }
-    res
-      .status(201)
-      .json({
-        message: "School added successfully",
-        schoolId: result.insertId,
-      });
+    res.status(201).json({
+      message: "School added successfully",
+      schoolId: result.insertId,
+    });
   });
 });
 
@@ -50,9 +65,7 @@ app.get("/listSchools", (req, res) => {
   const { userLat, userLon } = req.query;
 
   if (!userLat || !userLon) {
-    return res
-      .status(400)
-      .json({ error: "User latitude and longitude are required" });
+    return res.status(400).json({ error: "User latitude and longitude are required" });
   }
 
   const query = "SELECT * FROM schools";
