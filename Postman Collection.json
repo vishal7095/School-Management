@@ -1,6 +1,83 @@
 {
-  "name": "The Crescent School",
-  "address": "13C, Rai Charan Ghosh Lane, Kolkata",
-  "latitude": 40.7128,
-  "longitude": -74.006
+  "info": {
+    "name": "School Management API",
+    "_postman_id": "d6b3a7d8-8a6b-4b6c-a220-9c9ed6f58e32",
+    "description": "Collection of API requests for managing schools.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Add School",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Oakwood School\", \"address\": \"789 Oakwood Rd, Suburbia\", \"latitude\": 51.5074, \"longitude\": -0.1278}"
+        },
+        "url": {
+          "raw": "https://school-management-production-64dd.up.railway.app/addSchool",
+          "protocol": "https",
+          "host": [
+            "school-management-production-64dd",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "addSchool"
+          ]
+        }
+      },
+      "response": [
+        {
+          "status": "Created",
+          "code": 201,
+          "body": "{\"message\": \"School added successfully\", \"schoolId\": 4}"
+        }
+      ]
+    },
+    {
+      "name": "List Schools",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "https://school-management-production-64dd.up.railway.app/listSchools?userLat=12.2958&userLon=76.6394",
+          "protocol": "https",
+          "host": [
+            "school-management-production-64dd",
+            "up",
+            "railway",
+            "app"
+          ],
+          "path": [
+            "listSchools"
+          ],
+          "query": [
+            {
+              "key": "userLat",
+              "value": "12.2958"
+            },
+            {
+              "key": "userLon",
+              "value": "76.6394"
+            }
+          ]
+        }
+      },
+      "response": [
+        {
+          "status": "OK",
+          "code": 200,
+          "body": "{\"schools\": [{\"name\": \"Oakwood School\", \"address\": \"789 Oakwood Rd, Suburbia\", \"latitude\": 51.5074, \"longitude\": -0.1278, \"distance\": 5733790}, {\"name\": \"New School\", \"address\": \"789 Road, City\", \"latitude\": 12.2958, \"longitude\": 76.6394, \"distance\": 8566186}, {\"name\": \"Green Valley High School\", \"address\": \"123 Green Valley, Cityville\", \"latitude\": 40.7128, \"longitude\": -74.006, \"distance\": 8676777}, {\"name\": \"Sunrise Academy\", \"address\": \"456 Sunrise St, Townsville\", \"latitude\": 34.0522, \"longitude\": -118.244, \"distance\": 12588466}]}"
+        }
+      ]
+    }
+  ]
 }
